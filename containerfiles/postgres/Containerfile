@@ -1,0 +1,3 @@
+FROM local-registry-quay-quay.apps.centurion.bmocp.work.lan:443/damo/image-base:latest
+RUN dnf -y install postgresql-server
+EXPOSE 5432

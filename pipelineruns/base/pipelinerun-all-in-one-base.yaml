@@ -1,0 +1,50 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: all-in-one-base-build-
+spec:
+  params:
+  # Git repository containing the source to build
+  - name: GIT_REPOSITORY
+    value: https://github.com/ledererd/modern-rhel-workshop
+  - name: GIT_REPOSITORY_BRANCH
+    value: main
+  - name: CONTAINERFILE_PATH
+    value: ./base/Containerfile
+  - name: BUILD_CONTEXT
+    value: .
+  # Location of image the produced bootc image should be published
+  - name: IMAGE_NAME
+    value: quay.io/dlederer/workshop-base
+  - name: IMAGE_TAGS
+    value: latest
+  - name: FINAL_IMAGE_NAME
+    value: quay.io/dlederer/workshop-base-ocpv
+  - name: FINAL_IMAGE_TAGS
+    value: latest
+  - name: TLS_VERIFY
+    value: 'false'
+  - name: OCPVIRT_IMAGE_BUILD
+    value: 'true'
+  - name: SKIP_INTERMEDIATE
+    value: 'false'
+
+  pipelineRef:
+    name: all-in-one-base
+  workspaces:
+  - name: main-workspace
+    persistentVolumeClaim:
+      claimName: base-workspace
+  - name: cache-workspace
+    persistentVolumeClaim:
+      claimName: workspace-image-cache
+  - name: registry-creds
+    secret:
+      secretName: registry-credentials
+  - name: rhel-entitlements
+    secret:
+      secretName: etc-pki-entitlement
+  taskRunTemplate:
+    serviceAccountName: podman-builder
+    securityContext:
+      fsGroup: 0
