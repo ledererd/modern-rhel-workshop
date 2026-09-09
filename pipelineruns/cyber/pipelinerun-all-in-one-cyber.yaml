@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
-  generateName: all-in-one-base-build-
+  generateName: all-in-one-cyber-build-
 spec:
   params:
   # Git repository containing the source to build
@@ -10,16 +10,16 @@ spec:
   - name: GIT_REPOSITORY_BRANCH
     value: main
   - name: CONTAINERFILE_PATH
-    value: ./containerfiles/base/Containerfile
+    value: ./containerfiles/cyber/Containerfile
   - name: BUILD_CONTEXT
     value: .
   # Location of image the produced bootc image should be published
   - name: IMAGE_NAME
-    value: quay.io/dlederer/workshop-base
+    value: quay.io/dlederer/workshop-cyber
   - name: IMAGE_TAGS
     value: latest
   - name: FINAL_IMAGE_NAME
-    value: quay.io/dlederer/workshop-base-ocpv
+    value: quay.io/dlederer/workshop-cyber-ocpv
   - name: FINAL_IMAGE_TAGS
     value: latest
   - name: TLS_VERIFY
@@ -30,11 +30,11 @@ spec:
     value: 'false'
 
   pipelineRef:
-    name: all-in-one-base
+    name: all-in-one-cyber
   workspaces:
   - name: main-workspace
     persistentVolumeClaim:
-      claimName: base-workspace
+      claimName: cyber-workspace
   #- name: cache-workspace
   #  persistentVolumeClaim:
   #    claimName: workspace-image-cache

@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
-  name: all-in-one-base
+  name: all-in-one-cyber
 spec:
   params:
     - description: URL of the repository where Containerfile is stored
