@@ -5,7 +5,7 @@ FROM quay.io/dlederer/workshop-base:latest
 RUN --mount=type=cache,target=/var/cache,sharing=locked \
     --mount=type=cache,target=/var/lib/dnf,sharing=locked \
     dnf remove --assumeyes chrony plymouth && \
-    dnf install --assumeyes --quiet minimal-package-list
+    dnf group install --assumeyes "Minimal Install"
 
 # Ensure proper service states
 RUN systemctl disable unwanted-service.service
