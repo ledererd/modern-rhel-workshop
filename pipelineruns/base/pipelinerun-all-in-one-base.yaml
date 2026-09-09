@@ -10,7 +10,7 @@ spec:
   - name: GIT_REPOSITORY_BRANCH
     value: main
   - name: CONTAINERFILE_PATH
-    value: ./base/Containerfile
+    value: ./containerfiles/base/Containerfile
   - name: BUILD_CONTEXT
     value: .
   # Location of image the produced bootc image should be published
